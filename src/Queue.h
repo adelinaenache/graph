@@ -2,7 +2,6 @@
 #define _QUEUE_H
 
 #include "Vector.h"
-#include "Vector.cpp"
 
 class Queue : public Vector<int> {
 	const unsigned min_resize, shift_at;

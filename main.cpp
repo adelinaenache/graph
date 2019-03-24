@@ -2,6 +2,8 @@
 #include <cassert>
 #include "src/Stack.h"
 #include "src/Queue.h"
+#include "src/Vector.h"
+#include "src/Graph.h"
 
 using namespace std;
 
@@ -57,7 +59,49 @@ void queueTests() {
 	assert(q.empty());
 }
 
+void vectorTests() {
+	Vector<int> v, v2;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
+
+	// Copy constructor tests
+	v2 = v;
+	assert(v2[0] == 1);
+	assert(v2[1] == 2);
+	assert(v2[2] == 3);
+
+}
+
+void graphTests() {
+	Vector<Pair> edges;
+	edges.push_back(Pair(1, 2));
+	edges.push_back(Pair(1, 3));
+	edges.push_back(Pair(1, 4));
+	edges.push_back(Pair(3, 4));
+	edges.push_back(Pair(3, 5));
+	edges.push_back(Pair(2, 5));
+	
+	Graph g(5, edges);
+
+	// BFS Test
+	Vector<Pair> sol = g.bfs(1);
+	assert(sol.length() == 5);
+	assert(sol[0].first() == 1);
+	assert(sol[0].second() == 0);
+	assert(sol[1].first() == 2);
+	assert(sol[1].second() == 1);
+	assert(sol[2].first() == 3);
+	assert(sol[2].second() == 1);
+	assert(sol[3].first() == 4);
+	assert(sol[3].second() == 1);
+	assert(sol[4].first() == 5);
+	assert(sol[4].second() == 2);
+}
+
 int main() {
+	vectorTests();
+	graphTests();
 	stackTests();
 	queueTests();
 	return 0;

@@ -1,5 +1,6 @@
 #include "Stack.h"
 #include "Vector.h"
+#include <iostream>
 
 
 Stack::Stack() : Vector(0), min_resize(5) { }
