@@ -1,4 +1,6 @@
 #include "Vector.h"
+#include "Pair.h"
+
 
 template<class T>
 Vector<T>::Vector()
@@ -18,7 +20,7 @@ inline Vector<T>::Vector(const unsigned s)
 
 template<class T>
 inline Vector<T>::Vector(const Vector & arg)
-	:_length(arg._length), elements(new T[arg._length]) {
+	:_length(arg._length), elements(new T[arg._length]), _capacity(arg._capacity) {
 	for (int index = 0; index < arg._length; ++index) {
 		elements[index] = arg.elements[index];
 	}
@@ -49,6 +51,10 @@ inline Vector<T>& Vector<T>::operator=(const Vector<T>& a) {
 
 template<class T>
 Vector<T>::~Vector() {
+	if (elements == NULL) {
+		return;
+	}
+	_capacity = _length = 0;
 	delete[] elements;
 }
 
@@ -126,5 +132,10 @@ inline void Vector<T>::resize(int newsize, T val) {
 	for (int index = _length; index < newsize; ++index)
 		elements[index] = T();
 
-	_length = newsize;
+	_capacity = newsize;
 }
+
+template class Vector<int>;
+template class Vector<Pair>;
+template class Vector<Vector<int> >;
+template class Vector<Vector<Pair> >;
