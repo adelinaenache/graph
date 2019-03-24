@@ -1,6 +1,7 @@
 #ifndef _GRAPH_H
 #define _GRAPH_H
 
+#include <iostream>
 #include "Vector.h"
 #include "Pair.h"
 
@@ -34,8 +35,13 @@ public:
     unsigned getEdges() const;
     bool isTree() const;
 
+    friend std::istream& operator>>(std::istream&, Graph&);
+	friend std::ostream& operator<<(std::ostream&, const Graph&);
 private:
     void dfsUtil(int, bool*, Vector<int>&) const;
-
 };
+
+std::istream& operator>>(std::istream& is, Graph& g);
+std::ostream& operator<<(std::ostream& os, const Graph& g);
+
 #endif // _GRAPH_H

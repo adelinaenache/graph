@@ -169,3 +169,34 @@ Vector<int> Graph::operator[](const int i) const {
     return adj[i];
 }
 
+
+std::ostream& operator<<(std::ostream& os, const Graph& g) {
+    os << g.getNodes() << " " << g.getEdges() << "\n";
+
+    for (int i = 0; i < g.getNodes(); i++) {
+        os << "Node: " << i << "\n";
+        for (int j = 0; j < g[i].length(); j++) {
+            os << g[i][j] << " ";
+        }
+        os << "\n";
+    }
+    return os;
+}
+
+std::istream& operator>>(std::istream& is, Graph& g) {
+    int n, m;
+
+    is >> n >> m;
+
+    for (int i = 0; i < n; i++) {
+        g.addNode();
+    }
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        is >> x >> y;
+
+       g.addEdge(Pair(x, y));
+    }
+
+    return is;
+}

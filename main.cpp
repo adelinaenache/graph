@@ -160,9 +160,15 @@ void graphTests() {
 	assert(g.countConex() == 1);
 	assert(tree.countConex() == 1);
 
+	cout << g;
 	g.addNode();
 	g.addNode();
 	assert(g.countConex() == 3);
+	cout << g;
+
+	Graph k;
+	cin >> k;
+	cout << k;
 }
 
 int main() {
