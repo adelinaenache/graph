@@ -75,28 +75,94 @@ void vectorTests() {
 
 void graphTests() {
 	Vector<Pair> edges;
-	edges.push_back(Pair(1, 2));
-	edges.push_back(Pair(1, 3));
+	Vector<Pair> treeedges;
+	edges.push_back(Pair(0, 1));
+	edges.push_back(Pair(0, 2));
+	edges.push_back(Pair(0, 3));
+	edges.push_back(Pair(2, 3));
+	edges.push_back(Pair(2, 4));
 	edges.push_back(Pair(1, 4));
-	edges.push_back(Pair(3, 4));
-	edges.push_back(Pair(3, 5));
-	edges.push_back(Pair(2, 5));
+
 	
+	treeedges.push_back(Pair(0, 1));
+	treeedges.push_back(Pair(1, 2));
+	treeedges.push_back(Pair(2, 3));
+	treeedges.push_back(Pair(2, 4));
+
 	Graph g(5, edges);
+	Graph tree(5, treeedges);
 
 	// BFS Test
-	Vector<Pair> sol = g.bfs(1);
+	Vector<Pair> sol = g.bfs(0);
 	assert(sol.length() == 5);
-	assert(sol[0].first() == 1);
+	assert(sol[0].first() == 0);
 	assert(sol[0].second() == 0);
-	assert(sol[1].first() == 2);
+	assert(sol[1].first() == 1);
 	assert(sol[1].second() == 1);
-	assert(sol[2].first() == 3);
+	assert(sol[2].first() == 2);
 	assert(sol[2].second() == 1);
-	assert(sol[3].first() == 4);
+	assert(sol[3].first() == 3);
 	assert(sol[3].second() == 1);
-	assert(sol[4].first() == 5);
+	assert(sol[4].first() == 4);
 	assert(sol[4].second() == 2);
+
+	//DFS test
+	Vector<int> dfssol = g.dfs(0);
+	assert(dfssol.length() == 5);
+	for (int i = 0; i < 5; i++) {
+		cout << dfssol[i] << " ";
+	}
+	assert(dfssol[0] == 0);
+	assert(dfssol[1] == 1);
+	assert(dfssol[2] == 4);
+	assert(dfssol[3] == 2);
+	assert(dfssol[4] == 3);
+
+	// distance test
+
+	assert(g.distance(0 , 4) == 2);
+	assert(g.distance(1, 3) == 2);
+	assert(tree.distance(0, 4) == 3);
+
+	// Get edges test
+	assert(g.getEdges() == 6);
+
+	// Get nodes test
+	cout << g.getNodes();
+	assert(g.getNodes() == 5);
+
+	// isTree test
+	assert(g.isTree() == false);
+	assert(tree.isTree() == true);
+
+	// [] operator tests
+	assert(g[0][0] == 1);
+	assert(g[0][1] == 2);
+	assert(g[1][0] == 0);
+
+	// = operator tests
+	Graph g2;
+	g2 = g;
+
+	assert(g2.getNodes() == g.getNodes());
+	assert(g2.getEdges() == g.getEdges());
+	assert(g[0][0] == g2[0][0]);
+	assert(g[0][1] == g2[0][1]);
+	assert(g[1][0] == g2[1][0]);
+
+	// > and < operators tests
+
+	assert(g > g2 == false);
+	assert(g < g2 == false);
+	assert(g > tree == true);
+	assert(g < tree == false);
+
+	assert(g.countConex() == 1);
+	assert(tree.countConex() == 1);
+
+	g.addNode();
+	g.addNode();
+	assert(g.countConex() == 3);
 }
 
 int main() {

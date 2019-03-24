@@ -10,12 +10,14 @@ class Graph {
     Vector<Vector<int> > adj; // adj list;
 public:
     Graph();
+    Graph(unsigned);
     Graph(unsigned, unsigned);
     Graph(unsigned, Vector<Pair>);
     Graph(const Graph&);
 	Graph& operator=(const Graph& o);
-	Graph& operator>(const Graph&);
-    Graph& operator<(const Graph&);
+	bool operator>(const Graph&) const;
+    bool operator<(const Graph&) const;
+    Vector<int> operator[](const int) const;
 
     ~Graph();
 
@@ -33,7 +35,7 @@ public:
     bool isTree() const;
 
 private:
-    void dfsUtil(int, bool, Vector<int>&);
+    void dfsUtil(int, bool*, Vector<int>&) const;
 
 };
 #endif // _GRAPH_H

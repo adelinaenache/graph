@@ -4,18 +4,26 @@
 #include "Stack.h"
 
 Graph::Graph() : nodes(0), edges(0) {}
-Graph::Graph(unsigned _nodes, Vector<Pair> edgesPairs) : nodes(_nodes), edges(0) {
-    addNode();
-    for (int i = 1; i <= _nodes; i++) {
+
+Graph::Graph(unsigned _nodes) : nodes(0), edges(0) {
+    for (int i = 1; i < _nodes; i++) {
         addNode();
-    }
-      
-    for (int index = 0; index < edgesPairs.length(); index++) {
-        addEdge(edgesPairs[index]);
     }
 }
 
+Graph::Graph(unsigned _nodes, Vector<Pair> edgesPairs) : nodes(0), edges(0) {
+    for (int i = 0; i < _nodes; i++) {
+        addNode();
+    }
+
+    for (int index = 0; index < edgesPairs.length(); index++) {
+        addEdge(edgesPairs[index]);
+    }
+    nodes = _nodes;
+}
+
 Graph::Graph(const Graph &other): nodes(other.nodes), edges(other.edges), adj(other.adj) {}
+
 Graph::~Graph() {
     Vector <int> dummy;
     for (int index = 0; index < this->nodes; index++) {
@@ -50,29 +58,35 @@ bool Graph::isTree() const {
 }
 
 
-Vector<int> Graph::dfs(int start) {
+Vector<int> Graph::dfs(int start) const{
     Vector<int> sol;
-    bool *visited = new bool(false);
+    bool *visited = new bool[nodes];
+    for (int i = 0; i < nodes; i++) {
+        visited[i] = false;
+    }
     dfsUtil(start, visited, sol);
     return sol;
 }
 
-void Graph::dfsUtil(int k, bool *visited, Vector<int>&sol) {
+void Graph::dfsUtil(int k, bool *visited, Vector<int>&sol) const {
     sol.push_back(k);
     visited[k] = true;
     for (int i = 0; i < adj[k].length(); i++) {
         if (!visited[adj[k][i]]) {
-            dfsUtil(adj[k][i]);
+            dfsUtil(adj[k][i], visited, sol);
         }
     }
 }
 
-unsigned countConex() const {
+unsigned Graph::countConex() const {
     int sol = 0;
     Vector<int> parc;
-    bool *visited = new bool(false);
+    bool *visited = new bool[nodes];
+    for (int i = 0; i < nodes; i++) {
+        visited[i] = false;
+    }
 
-    for (int i = 1; i <= nodes; i++) {
+    for (int i = 0; i < nodes; i++) {
         if (!visited[i]) {
             sol++;
             dfsUtil(i, visited, parc);
@@ -90,7 +104,10 @@ Vector<Pair> Graph::bfs(int start) const {
             // the solutions vector because i want access to
             // the distance from start node
             // and queue is only implemented for integers.
-    bool *visited = new bool(false);
+    bool *visited = new bool[nodes];
+    for (int i = 0; i < nodes; i++) {
+        visited[i] = false;
+    }
     visited[start] = true;
 
     while(!q.isEmpty()) {
@@ -132,4 +149,23 @@ unsigned Graph::distance(int start, int stop) const {
         }
     }
     return 0; // return 0 if the node is not found
-} 
+}
+
+bool Graph::operator>(const Graph& other) const {
+    if (getNodes() == other.getNodes()) {
+        return getEdges() > other.getEdges();
+    }
+    return getNodes() > other.getNodes();
+}
+
+bool Graph::operator<(const Graph& other) const {
+    if (getNodes() == other.getNodes()) {
+        return getEdges() < other.getEdges();
+    }
+    return getNodes() < other.getNodes();
+}
+
+Vector<int> Graph::operator[](const int i) const {
+    return adj[i];
+}
+
