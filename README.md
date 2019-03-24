@@ -2,18 +2,13 @@
 
 C++ Graph implementaion. 
 
+### Build & run 
 
-### Functionality
-
-* bfs 
-* dfs
-* count conex components
-* check if the given graph is tree
-* count distance between two nodes
-* override = operator
-* override > and < operators
-* override >> and << operators
-* [] returns the adjacency list of the node
+```
+cd graph
+make all 
+./build/graph
+```
 
 ### Notes
 
@@ -48,3 +43,16 @@ nodeK nodeP
 * nodes start from 0 
 * functionality is displayed in main.cpp
 * the program reads & writes an graph - input from keyboward needed
+
+
+### Functionality
+
+* bfs 
+* dfs
+* count conex components
+* check if the given graph is tree
+* count distance between two nodes
+* override = operator
+* override > and < operators
+* override >> and << operators
+* [] returns the adjacency list of the node
